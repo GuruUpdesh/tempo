@@ -12,7 +12,7 @@ import React, { useRef } from "react";
 const UserActions = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleImportClick = (e) => {
+    const handleImportClick = (e: Event) => {
         e.preventDefault();
         fileInputRef.current?.click();
     };
