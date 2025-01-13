@@ -25,7 +25,7 @@ export default function RootLayout({
         className={`${MontserratSans.variable} antialiased bg-background text-foreground`}
       >
         <nav className="p-4 flex justify-center w-full">
-          <div className="max-w-[1400px] w-full flex justify-between items-center">
+          <div className="max-w-[900px] w-full flex justify-between items-center">
             <Logo />
             <User />
           </div>

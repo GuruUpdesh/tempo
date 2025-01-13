@@ -103,7 +103,14 @@ export default async function Home({ params }: Props) {
         <div className="h-[calc(100vh-62px)] overflow-hidden font-[family-name:var(--font-sans)]">
             {!session && <SignIn />}
             <main className="flex flex-col items-center mx-auto h-full">
-                <div className="text-center my-12">
+                <div className="flex flex-col text-center my-12 items-center">
+                    <div className="min-h-[33px] mb-4">
+                        {activeEntry?.description && (
+                            <p className="rounded-md bg-card border-t border-border px-4 py-1 w-fit">
+                                {activeEntry.description}
+                            </p>
+                        )}
+                    </div>
                     <Timer activeEntry={activeEntry} />
                     <p className="mt-4">
                         Total time tracked today: {formatDuration(todayTotal)}
