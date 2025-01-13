@@ -136,8 +136,8 @@ export const TrashIcon = () => (
 
 export const Logo = () => (
     <svg
-        width="130"
-        height="39"
+        width="100"
+        height="30"
         viewBox="0 0 1364 408"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

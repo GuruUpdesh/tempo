@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components/Icons";
+import User from "@/components/User";
 
 const  MontserratSans = Montserrat({
   variable: "--font-sans",
@@ -23,8 +24,11 @@ export default function RootLayout({
       <body
         className={`${MontserratSans.variable} antialiased bg-background text-foreground`}
       >
-        <nav className="p-4 absolute">
-          <Logo />
+        <nav className="p-4 flex justify-center w-full">
+          <div className="max-w-[1400px] w-full flex justify-between items-center">
+            <Logo />
+            <User />
+          </div>
         </nav>
         {children}
       </body>

@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 import { deleteEntry } from "@/actions/entry";
 import { Trash2Icon, Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
-import { handlePause } from "@/actions/Timer";
+import { handlePause } from "@/actions/timer";
 
 type Props = {
     entry: TimeEntry;

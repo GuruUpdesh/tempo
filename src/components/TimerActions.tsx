@@ -4,7 +4,7 @@ import React, { useTransition } from "react";
 import { PauseIcon, PlayIcon } from "@/components/Icons";
 import { Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
-import { handlePause, handleStart } from "@/actions/Timer";
+import { handlePause, handleStart } from "@/actions/timer";
 import { Button } from "./ui/button";
 
 type Props = {

@@ -2,19 +2,25 @@ import React from "react";
 
 import TimeEntries from "../components/TimeEntries";
 import { db } from "@/db";
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { timeEntries, TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/TimerActions";
 import Timer from "@/components/Timer";
 import { differenceInMinutes, format, isToday } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
+import SignIn from "@/components/SignIn";
+import { auth } from "@/auth";
 
 export default async function Home() {
-    const entries = await db
-        .select()
-        .from(timeEntries)
-        .orderBy(desc(timeEntries.startTime));
-    console.log(entries);
+    const session = await auth();
+
+    const entries = session?.user?.id
+    ? await db
+          .select()
+          .from(timeEntries)
+          .where(eq(timeEntries.userId, session.user.id))
+          .orderBy(desc(timeEntries.startTime))
+    : [];
     const activeEntry = entries.find((entry) => !entry.endTime);
 
     const formatDuration = (minutes: number) => {
@@ -45,8 +51,9 @@ export default async function Home() {
     const allTimeTotal = calculateTotalTime(entries);
 
     return (
-        <div className="min-h-screen font-[family-name:var(--font-sans)]">
-            <main className="flex flex-col items-center mx-auto pt-20">
+        <div className="h-[calc(100vh-62px)] overflow-hidden font-[family-name:var(--font-sans)]">
+            {!session && <SignIn />}
+            <main className="flex flex-col items-center mx-auto h-full">
                 <div className="text-center my-12">
                     <Timer activeEntry={activeEntry} />
                     <p className="mt-4">
@@ -55,7 +62,7 @@ export default async function Home() {
                 </div>
                 <TimerActions activeEntry={activeEntry} />
 
-                <section className="w-[900px] flex flex-col gap-2">
+                <section className="w-[900px] flex flex-col gap-2 overflow-y-auto flex-1 px-2">
                     <header className="flex justify-between items-center w-full">
                         <div className="flex items-center gap-4">
                             <h3>{format(new Date(), "EEEE, MMMM d")}</h3>

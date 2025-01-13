@@ -1,11 +1,17 @@
 "use server";
 
+import { auth } from "@/auth";
 import { db } from "@/db";
 import { timeEntries } from "@/db/schema";
 import { desc, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function handlePause() {
+    const session = await auth();
+    if (!session || !session.user?.id) {
+        return { error: "Session not found", data: null };
+    }
+
     const activeEntry = await db.query.timeEntries.findFirst({
         where: isNull(timeEntries.endTime),
         orderBy: [desc(timeEntries.startTime)],
@@ -17,7 +23,7 @@ export async function handlePause() {
 
     await db
         .update(timeEntries)
-        .set({ 
+        .set({
             endTime: new Date()
         })
         .where(eq(timeEntries.id, activeEntry.id));
@@ -28,6 +34,11 @@ export async function handlePause() {
 }
 
 export async function handleStart() {
+    const session = await auth();
+    if (!session || !session.user?.id) {
+        return { error: "Session not found", data: null };
+    }
+
     const activeEntry = await db.query.timeEntries.findFirst({
         where: isNull(timeEntries.endTime),
         orderBy: [desc(timeEntries.startTime)],
@@ -38,7 +49,7 @@ export async function handleStart() {
     }
 
     await db.insert(timeEntries).values({
-        description: "Work",
+        userId: session.user.id,
         startTime: new Date()
     });
 
