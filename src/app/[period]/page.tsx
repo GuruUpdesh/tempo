@@ -6,7 +6,17 @@ import { and, desc, eq, gte, lte } from "drizzle-orm";
 import { timeEntries, TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/TimerActions";
 import Timer from "@/components/Timer";
-import { differenceInMinutes, endOfDay, endOfMonth, endOfWeek, isToday, startOfDay, startOfMonth, startOfWeek, sub } from "date-fns";
+import {
+    differenceInMinutes,
+    endOfDay,
+    endOfMonth,
+    endOfWeek,
+    isToday,
+    startOfDay,
+    startOfMonth,
+    startOfWeek,
+    sub,
+} from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
 import SignIn from "@/components/SignIn";
 import { auth } from "@/auth";
@@ -15,47 +25,51 @@ import PeriodToggle, { Period } from "@/components/PeriodToggle";
 const getDateRange = (period: Period) => {
     const now = new Date();
     switch (period) {
-        case 'day':
+        case "day":
             return {
                 start: startOfDay(now),
-                end: endOfDay(now)
+                end: endOfDay(now),
             };
-        case 'week':
+        case "week":
             return {
                 start: startOfWeek(now, { weekStartsOn: 0 }),
-                end: endOfWeek(now, { weekStartsOn: 0 })
+                end: endOfWeek(now, { weekStartsOn: 0 }),
             };
-        case 'month':
+        case "month":
             return {
                 start: startOfMonth(now),
-                end: endOfMonth(now)
+                end: endOfMonth(now),
             };
-        case 'year':
+        case "year":
             return {
                 start: sub(now, { years: 1 }),
-                end: now
+                end: now,
             };
     }
 };
 
-export default async function Home({ params }: { params: { period: Period } }) {
+type Props = {
+    params: Promise<{ period: Period }>;
+};
+
+export default async function Home({ params }: Props) {
     const session = await auth();
-    const { period } = await params
+    const { period } = await params;
     const { start, end } = getDateRange(period);
 
     const entries = session?.user?.id
-    ? await db
-          .select()
-          .from(timeEntries)
-          .where(
-            and(
-                eq(timeEntries.userId, session.user.id),
-                gte(timeEntries.startTime, start),
-                lte(timeEntries.startTime, end)
-            )
-        )
-          .orderBy(desc(timeEntries.startTime))
-    : [];
+        ? await db
+              .select()
+              .from(timeEntries)
+              .where(
+                  and(
+                      eq(timeEntries.userId, session.user.id),
+                      gte(timeEntries.startTime, start),
+                      lte(timeEntries.startTime, end)
+                  )
+              )
+              .orderBy(desc(timeEntries.startTime))
+        : [];
     const activeEntry = entries.find((entry) => !entry.endTime);
 
     const formatDuration = (minutes: number) => {
