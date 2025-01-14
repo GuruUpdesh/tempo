@@ -4,15 +4,18 @@ import React, { useEffect, useState } from "react";
 
 type Props = {
     activeEntry: TimeEntry | undefined;
+    initialTime?: string;
 };
 
-const Timer = ({ activeEntry }: Props) => {
-    const [time, setTime] = useState("00:00:00");
+const DEFAULT_TIME = "00:00:00"
+
+const Timer = ({ activeEntry, initialTime=DEFAULT_TIME }: Props) => {
+    const [time, setTime] = useState(initialTime);
 
     useEffect(() => {
         const calculateTime = () => {
             if (!activeEntry) {
-                setTime("00:00:00");
+                setTime(DEFAULT_TIME);
                 return;
             }
 
@@ -24,7 +27,8 @@ const Timer = ({ activeEntry }: Props) => {
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, "0");
             const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, "0");
 
-            setTime(`${hours}:${minutes}:${seconds}`);
+            const time = `${hours}:${minutes}:${seconds}`
+            setTime(time);
         };
 
         calculateTime();
@@ -32,6 +36,10 @@ const Timer = ({ activeEntry }: Props) => {
 
         return () => clearInterval(interval);
     }, [activeEntry]);
+
+    useEffect(() => {
+        document.cookie = `timer=${time}; path=/; max-age=31536000`;
+    }, [time])
 
     return (
         <div className="relative">

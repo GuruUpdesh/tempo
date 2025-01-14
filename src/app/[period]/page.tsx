@@ -11,6 +11,7 @@ import { auth } from "@/auth";
 import PeriodToggle, { Period } from "@/components/PeriodToggle";
 import { getEntries } from "@/actions/entry";
 import { TimezoneHandler } from "@/components/TimezoneHandler";
+import { cookies } from "next/headers";
 
 type Props = {
     params: Promise<{ period: Period }>;
@@ -50,6 +51,9 @@ export default async function Home({ params }: Props) {
             }, 0);
     };
 
+    const cookieStore = await cookies()
+    const timer = cookieStore.get("timer")?.value
+
     const todayTotal = calculateTotalTime(entries, (entry) =>
         isToday(entry.startTime)
     );
@@ -69,7 +73,7 @@ export default async function Home({ params }: Props) {
                             </p>
                         )}
                     </div>
-                    <Timer activeEntry={activeEntry} />
+                    <Timer activeEntry={activeEntry} initialTime={timer} />
                     <p className="mt-4">
                         Total time tracked today: {formatDuration(todayTotal)}
                     </p>
