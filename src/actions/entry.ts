@@ -40,7 +40,7 @@ const getDateRange = (period: string, timeZone: string) => {
         }
         case "year": {
             const start = sub(today, { years: 1, ...tzOption });
-            const end = today;
+            const end = endOfDay(today, tzOption);
             return { start, end };
         }
         default:
