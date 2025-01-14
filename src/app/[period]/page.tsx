@@ -1,52 +1,16 @@
 import React from "react";
 
 import TimeEntries from "../../components/TimeEntries";
-import { db } from "@/db";
-import { and, desc, eq, gte, lte } from "drizzle-orm";
-import { timeEntries, TimeEntry } from "@/db/schema";
+import { TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/TimerActions";
 import Timer from "@/components/Timer";
-import {
-    differenceInMinutes,
-    endOfDay,
-    endOfMonth,
-    endOfWeek,
-    isToday,
-    startOfDay,
-    startOfMonth,
-    startOfWeek,
-    sub,
-} from "date-fns";
+import { differenceInMinutes, isToday } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
 import SignIn from "@/components/SignIn";
 import { auth } from "@/auth";
 import PeriodToggle, { Period } from "@/components/PeriodToggle";
-
-const getDateRange = (period: Period) => {
-    const now = new Date();
-    switch (period) {
-        case "day":
-            return {
-                start: startOfDay(now),
-                end: endOfDay(now),
-            };
-        case "week":
-            return {
-                start: startOfWeek(now, { weekStartsOn: 0 }),
-                end: endOfWeek(now, { weekStartsOn: 0 }),
-            };
-        case "month":
-            return {
-                start: startOfMonth(now),
-                end: endOfMonth(now),
-            };
-        case "year":
-            return {
-                start: sub(now, { years: 1 }),
-                end: now,
-            };
-    }
-};
+import { getEntries } from "@/actions/entry";
+import { TimezoneHandler } from "@/components/TimezoneHandler";
 
 type Props = {
     params: Promise<{ period: Period }>;
@@ -55,21 +19,14 @@ type Props = {
 export default async function Home({ params }: Props) {
     const session = await auth();
     const { period } = await params;
-    const { start, end } = getDateRange(period);
 
-    const entries = session?.user?.id
-        ? await db
-              .select()
-              .from(timeEntries)
-              .where(
-                  and(
-                      eq(timeEntries.userId, session.user.id),
-                      gte(timeEntries.startTime, start),
-                      lte(timeEntries.startTime, end)
-                  )
-              )
-              .orderBy(desc(timeEntries.startTime))
-        : [];
+    const results = await getEntries(period);
+    if (results.error !== null) {
+        console.error(results.error);
+        return null;
+    }
+
+    const entries = session?.user?.id ? results.data : [];
     const activeEntry = entries.find((entry) => !entry.endTime);
 
     const formatDuration = (minutes: number) => {
@@ -101,6 +58,7 @@ export default async function Home({ params }: Props) {
 
     return (
         <div className="h-[calc(100vh-62px)] overflow-hidden font-[family-name:var(--font-sans)]">
+            <TimezoneHandler />
             {!session && <SignIn />}
             <main className="flex flex-col items-center mx-auto h-full">
                 <div className="flex flex-col text-center my-12 items-center">

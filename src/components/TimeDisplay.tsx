@@ -1,10 +1,10 @@
 "use client";
 
 import { TimeEntry } from "@/db/schema";
-import { format } from "date-fns-tz";
+import { tz } from "@date-fns/tz";
 import { Period } from "./PeriodToggle";
 import { getTimeZone } from "@/lib/timeConfig";
-import { differenceInMinutes, differenceInSeconds } from "date-fns";
+import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
 
 type Props = {
     entry: TimeEntry;
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const formatTime = (date: Date, timeZone: string, formatStr: string) => {
-    return format(date, formatStr, { timeZone });
+    return format(date, formatStr, { in: tz(timeZone) });
 };
 
 export function EntryTimeCells({ entry, period, showDate = true }: Props) {
