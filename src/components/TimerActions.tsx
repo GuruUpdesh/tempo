@@ -1,6 +1,6 @@
 "use client";
 
-import React, { act, useTransition } from "react";
+import React, { useTransition } from "react";
 import { PauseIcon, PlayIcon } from "@/components/Icons";
 import { Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
