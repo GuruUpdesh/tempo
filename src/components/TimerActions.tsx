@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { act, useTransition } from "react";
 import { PauseIcon, PlayIcon } from "@/components/Icons";
 import { Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
 import { handlePause, handleStart } from "@/actions/timer";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 type Props = {
     activeEntry: TimeEntry | undefined;
@@ -36,7 +37,9 @@ const TimerActions = ({ activeEntry }: Props) => {
                 onClick={handleClick}
                 aria-label={activeEntry ? "pause" : "play"}
                 size="icon"
-                className="rounded-full"
+                className={cn("rounded-full", {
+                    "bg-[#3C82F6] text-foreground hover:bg-foreground hover:text-[#3C82F6]": !activeEntry && !isPending
+                })}
                 disabled={isPending}
             >
                 {isPending ? (

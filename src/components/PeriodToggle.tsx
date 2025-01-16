@@ -23,10 +23,8 @@ const PeriodToggle = ({ currentPeriod }: Props) => {
                     key={value}
                     href={`/${value}`}
                     className={cn(
-                        "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
-                        currentPeriod === value
-                            ? "bg-background shadow-sm"
-                            : "hover:bg-background/50"
+                        "px-3 py-1.5 text-sm font-medium rounded-md transition-colors border-b border-transparent hover:bg-foreground hover:text-background hover:border-background",
+                        {"bg-background border-border" : currentPeriod === value}
                     )}
                 >
                     {label}
