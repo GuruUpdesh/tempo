@@ -38,7 +38,7 @@ const TimerActions = ({ activeEntry }: Props) => {
                 aria-label={activeEntry ? "pause" : "play"}
                 size="icon"
                 className={cn("rounded-full", {
-                    "bg-[#3C82F6] text-foreground hover:bg-foreground hover:text-[#3C82F6]": !activeEntry && !isPending
+                    "bg-primary text-foreground hover:bg-foreground hover:text-primary": !activeEntry && !isPending
                 })}
                 disabled={isPending}
             >

@@ -63,7 +63,7 @@ type GetEntriesResult = GetEntriesSuccess | GetEntriesError;
 export async function getEntries(period: Period): Promise<GetEntriesResult> {
     const session = await auth();
     if (!session || !session.user?.id) {
-        return { error: "Session not found", data: null };
+        return { error: null, data: [] };
     }
 
     const cookieStore = await cookies();

@@ -5,6 +5,7 @@ import { tz } from "@date-fns/tz";
 import { Period } from "./PeriodToggle";
 import { getTimeZone } from "@/lib/timeConfig";
 import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 type Props = {
     entry: TimeEntry;
@@ -58,17 +59,19 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
     return (
         <>
             {showDate && period !== "day" && (
-                <td className="bg-card whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px] rounded-l">
+                <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px] rounded-l">
                     {getDateDisplay(entry.endTime || entry.startTime)}
                 </td>
             )}
-            <td className="bg-card whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px]">
+            <td className={cn("bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px]", {
+                "rounded-l": period === "day"
+            })}>
                 {getTimeDisplay(entry.startTime)}
             </td>
-            <td className="bg-card whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
                 {getTimeDisplay(entry.endTime)}
             </td>
-            <td className="bg-card whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
                 {getDurationDisplay(entry.startTime, entry.endTime)}
             </td>
         </>
