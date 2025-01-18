@@ -61,7 +61,7 @@ export default async function Home({ params }: Props) {
     const allTimeTotal = calculateTotalTime(entries);
 
     return (
-        <div className="h-[calc(100vh-62px)] overflow-hidden font-[family-name:var(--font-sans)]">
+        <div className="font-[family-name:var(--font-sans)]">
             <TimezoneHandler />
             {!session && <SignIn />}
             <main className="flex flex-col items-center mx-auto h-full">
@@ -80,8 +80,8 @@ export default async function Home({ params }: Props) {
                 </div>
                 <TimerActions activeEntry={activeEntry} />
 
-                <section className="w-[900px] flex flex-col overflow-y-auto flex-1 px-2">
-                    <header className="flex justify-between items-center w-full sticky top-0 bg-background pb-2">
+                <section className="w-[900px] flex flex-col px-2">
+                    <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2">
                         <div className="flex items-center gap-4">
                             <PeriodToggle currentPeriod={period} />
                             <SummaryButton entries={entries} />
