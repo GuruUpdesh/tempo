@@ -1,8 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-
-export type Period = "day" | "week" | "month" | "year";
+import { Period } from "@/lib/types";
 
 const PERIODS: { label: string; value: Period }[] = [
     { label: "Day", value: "day" },

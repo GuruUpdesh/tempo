@@ -9,3 +9,5 @@ export type ActionError = {
 };
 
 export type ActionResponse<T> = Promise<ActionSuccess<T> | ActionError>; 
+
+export type Period = "day" | "week" | "month" | "year";

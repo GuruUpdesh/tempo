@@ -8,11 +8,12 @@ import { differenceInMinutes, isToday } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
 import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
-import PeriodToggle, { Period } from "@/components/PeriodToggle";
 import { getEntries } from "@/actions/entry";
 import { TimezoneHandler } from "@/components/TimezoneHandler";
 import { cookies } from "next/headers";
 import { toast } from "sonner";
+import { Period } from "@/lib/types";
+import PeriodToggle from "@/components/PeriodToggle";
 
 type Props = {
     params: Promise<{ period: Period }>;

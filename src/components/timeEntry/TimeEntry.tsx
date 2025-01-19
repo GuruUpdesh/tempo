@@ -1,10 +1,10 @@
 import React from "react";
 import { TimeEntry as TimeEntryType } from "@/db/schema";
+import { EntryTimeCells } from "./TimeDisplay";
 import DescriptionForm from "./DescriptionForm";
 import EntryActions from "./EntryActions";
-import { Period } from "./PeriodToggle";
-import { EntryTimeCells } from "./TimeDisplay";
 import { cn } from "@/lib/utils";
+import { Period } from "@/lib/types";
 
 type Props = {
     entry: TimeEntryType;

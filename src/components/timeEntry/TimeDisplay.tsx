@@ -2,11 +2,11 @@
 
 import { TimeEntry } from "@/db/schema";
 import { tz } from "@date-fns/tz";
-import { Period } from "./PeriodToggle";
 import { getTimeZone } from "@/lib/timeConfig";
 import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import { Period } from "@/lib/types";
 
 type Props = {
     entry: TimeEntry;

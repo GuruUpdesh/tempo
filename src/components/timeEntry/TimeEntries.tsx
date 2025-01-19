@@ -1,7 +1,7 @@
 import React from "react";
 import { TimeEntry as TimeEntryType } from "@/db/schema";
 import TimeEntry from "./TimeEntry";
-import { Period } from "../PeriodToggle";
+import { Period } from "@/lib/types";
 
 type Props = {
     entries: TimeEntryType[];

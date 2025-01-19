@@ -1,7 +1,6 @@
 "use server";
 
 import { auth } from "@/auth";
-import { Period } from "@/components/PeriodToggle";
 import { db } from "@/db";
 import { timeEntries, TimeEntry } from "@/db/schema";
 import { TZDate  } from "@date-fns/tz";
@@ -9,7 +8,7 @@ import { and, desc, eq, gte, lte } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { getDateRange } from "@/utils/getDateRange";
-import { ActionResponse } from "@/lib/types";
+import { ActionResponse, Period } from "@/lib/types";
 
 export async function getEntries(period: Period): ActionResponse<TimeEntry[]> {
     const session = await auth();
