@@ -15,7 +15,7 @@ const UserActions = () => {
     const openDialog = useDialogStore((state) => state.open);
 
     return (
-        <DropdownMenuContent align="start" className="w-[160px]">
+        <DropdownMenuContent align="center" className="w-[160px]">
             <DropdownMenuItem asChild>
                 <Link href="/info/privacy">
                     <InfoIcon className="w-4 h-4" />

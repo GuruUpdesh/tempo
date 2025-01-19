@@ -13,7 +13,7 @@ const User = async () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div className="flex items-center gap-2 group">
+                <div className="p-1 rounded-full hover:bg-accent data-[state=open]:bg-accent">
                     {session.user.image && (
                         <Image
                             src={session.user.image}
@@ -23,7 +23,6 @@ const User = async () => {
                             className="rounded-full"
                         />
                     )}
-                    <p className="text-sm text-muted-foreground group-hover:text-foreground group-data-[state=open]:text-foreground">{session.user.name}</p>
                 </div>
             </DropdownMenuTrigger>
             <UserActions />
