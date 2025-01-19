@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { timeEntries } from "@/db/schema";
+import { ActionResponse } from "@/lib/types";
 import { parse } from "csv-parse/sync";
 import { revalidatePath } from "next/cache";
 import z from "zod";
@@ -48,7 +49,12 @@ const recordsSchema = z.array(z.object({
     endtime: z.union([z.string(), z.number()]).optional(),
 }))
 
-export async function importTimeEntries(formData: FormData) {
+type ImportResults = {
+    rows: number;
+    skippedRows: number;
+}
+
+export async function importTimeEntries(formData: FormData): ActionResponse<ImportResults> {
     const session = await auth();
     if (!session?.user?.id) {
         return { data: null, error: "Not authorized" }

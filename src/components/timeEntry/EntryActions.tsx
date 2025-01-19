@@ -7,8 +7,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PauseIcon, VerticalDotsIcon } from "./Icons";
-import { Button } from "./ui/button";
+import { PauseIcon, VerticalDotsIcon } from "../Icons";
+import { Button } from "../ui/button";
 import { deleteEntry } from "@/actions/entry";
 import { Trash2Icon, Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";

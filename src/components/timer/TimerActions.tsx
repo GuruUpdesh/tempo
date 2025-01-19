@@ -5,7 +5,7 @@ import { PauseIcon, PlayIcon } from "@/components/Icons";
 import { Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
 import { handlePause, handleStart } from "@/actions/timer";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 

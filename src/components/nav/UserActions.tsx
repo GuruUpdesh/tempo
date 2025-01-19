@@ -8,7 +8,7 @@ import {
 import { useDialogStore } from "@/store/dialog";
 import { ImportIcon, InfoIcon, LogOutIcon } from "lucide-react";
 
-import { KEY } from "./ImportDialog";
+import { KEY } from "../dialogs/ImportDialog";
 import Link from "next/link";
 
 const UserActions = () => {

@@ -4,7 +4,7 @@ import React, { useTransition } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AuthProvider, login } from "@/actions/auth";
-import { LogoChip } from "./Icons";
+import { LogoChip } from "@/components/Icons";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { Loader } from "lucide-react";
 import { IconBaseProps } from "react-icons";

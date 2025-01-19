@@ -8,4 +8,4 @@ export type ActionError = {
     data: null;
 };
 
-export type ActionResponse<T> = ActionSuccess<T> | ActionError; 
+export type ActionResponse<T> = Promise<ActionSuccess<T> | ActionError>; 

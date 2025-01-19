@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components/Icons";
-import User from "@/components/User";
-import Dialogs from "@/components/Dialogs";
+import User from "@/components/nav/User";
+import Dialogs from "@/components/dialogs/Dialogs";
 import { Toaster } from "@/components/ui/sonner";
 import Link from "next/link";
 

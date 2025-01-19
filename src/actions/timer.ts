@@ -3,10 +3,11 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { timeEntries } from "@/db/schema";
+import { ActionResponse } from "@/lib/types";
 import { desc, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function handlePause() {
+export async function handlePause(): ActionResponse<boolean> {
     const session = await auth();
     if (!session || !session.user?.id) {
         return { error: "Session not found", data: null };
@@ -33,7 +34,7 @@ export async function handlePause() {
     return { error: null, data: true };
 }
 
-export async function handleStart() {
+export async function handleStart(): ActionResponse<boolean> {
     const session = await auth();
     if (!session || !session.user?.id) {
         return { error: "Session not found", data: null };

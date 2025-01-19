@@ -1,6 +1,7 @@
 "use server";
 
 import { TimeEntry } from "@/db/schema";
+import { ActionResponse } from "@/lib/types";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
@@ -35,10 +36,10 @@ const formatForSlack = (
         .join("\n\n");
 };
 
-export async function generateSummary(timeLogEntries: TimeEntry[]) {
+export async function generateSummary(timeLogEntries: TimeEntry[]): ActionResponse<string> {
     try {
         if (timeLogEntries.length === 0) {
-            return { success: false, error: "No time log entries provided" };
+            return { data: null, error: "No time log entries provided" };
         }
 
         const formattedEntries = timeLogEntries
@@ -81,13 +82,13 @@ Guidelines:
         const formattedSummary = formatForSlack(summary.sections);
 
         return {
-            success: true,
-            summary: formattedSummary,
+            data: formattedSummary,
+            error: null,
         };
     } catch (error) {
         console.error(error, "[AI] Summary generation failed");
         return {
-            success: false,
+            data: null,
             error:
                 error instanceof Error
                     ? error.message

@@ -1,12 +1,12 @@
 import React from "react";
 
-import TimeEntries from "../../components/TimeEntries";
+import TimeEntries from "../../components/timeEntry/TimeEntries";
 import { TimeEntry } from "@/db/schema";
-import TimerActions from "@/components/TimerActions";
-import Timer from "@/components/Timer";
+import TimerActions from "@/components/timer/TimerActions";
+import Timer from "@/components/timer/Timer";
 import { differenceInMinutes, isToday } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
-import SignIn from "@/components/SignIn";
+import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
 import PeriodToggle, { Period } from "@/components/PeriodToggle";
 import { getEntries } from "@/actions/entry";

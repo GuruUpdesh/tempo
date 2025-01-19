@@ -37,8 +37,8 @@ export function SummaryButton({ entries }: Props) {
 
         startTransition(async () => {
             const result = await generateSummary(entries);
-            if (result.success && result.summary) {
-                saveSummary(result.summary);
+            if (result.data) {
+                saveSummary(result.data);
                 setIsDialogOpen(true);
             } else {
                 toast.error(result.error);
