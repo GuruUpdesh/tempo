@@ -1,42 +1,36 @@
 import { InferSelectModel } from "drizzle-orm";
-import {
-    text,
-    sqliteTable,
-    integer,
-    primaryKey,
-} from "drizzle-orm/sqlite-core";
-import type { AdapterAccountType } from "next-auth/adapters";
+import { integer, text, boolean, pgTable, timestamp, primaryKey, serial } from "drizzle-orm/pg-core";
 
-export const timeEntries = sqliteTable("time_entries", {
-    id: integer("id").primaryKey({ autoIncrement: true }),
+export const timeEntries = pgTable("time_entries", {
+    id: serial('id').primaryKey(),
     userId: text("userId")
         .notNull()
         .references(() => users.id, { onDelete: "cascade" }),
     description: text("description"),
-    startTime: integer("start_time", { mode: "timestamp_ms" }).notNull(),
-    endTime: integer("end_time", { mode: "timestamp_ms" }),
+    startTime: timestamp('start_time').notNull(),
+    endTime: timestamp('end_time'),
 });
 
 export type TimeEntry = InferSelectModel<typeof timeEntries>;
 
 // Next Auth Schemas ----------------------------------------------------------
-export const users = sqliteTable("user", {
+export const users = pgTable("user", {
     id: text("id")
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
     name: text("name"),
     email: text("email").unique(),
-    emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
+    emailVerified: timestamp("emailVerified"),
     image: text("image"),
 });
 
-export const accounts = sqliteTable(
+export const accounts = pgTable(
     "account",
     {
         userId: text("userId")
             .notNull()
             .references(() => users.id, { onDelete: "cascade" }),
-        type: text("type").$type<AdapterAccountType>().notNull(),
+        type: text("type").notNull(),
         provider: text("provider").notNull(),
         providerAccountId: text("providerAccountId").notNull(),
         refresh_token: text("refresh_token"),
@@ -47,22 +41,20 @@ export const accounts = sqliteTable(
         id_token: text("id_token"),
         session_state: text("session_state"),
     },
-    (account) => ({
-        compoundKey: primaryKey({
-            columns: [account.provider, account.providerAccountId],
-        }),
+    (table) => ({
+        pk: primaryKey({ columns: [table.provider, table.providerAccountId] }),
     })
 );
 
-export const sessions = sqliteTable("session", {
+export const sessions = pgTable("session", {
     sessionToken: text("sessionToken").primaryKey(),
     userId: text("userId")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
-})
+        .notNull()
+        .references(() => users.id, { onDelete: "cascade" }),
+    expires: timestamp("expires").notNull(),
+});
 
-export const authenticators = sqliteTable(
+export const authenticators = pgTable(
     "authenticator",
     {
         credentialID: text("credentialID").notNull().unique(),
@@ -73,14 +65,10 @@ export const authenticators = sqliteTable(
         credentialPublicKey: text("credentialPublicKey").notNull(),
         counter: integer("counter").notNull(),
         credentialDeviceType: text("credentialDeviceType").notNull(),
-        credentialBackedUp: integer("credentialBackedUp", {
-            mode: "boolean",
-        }).notNull(),
+        credentialBackedUp: boolean("credentialBackedUp").notNull(),
         transports: text("transports"),
     },
-    (authenticator) => ({
-        compositePK: primaryKey({
-            columns: [authenticator.userId, authenticator.credentialID],
-        }),
+    (table) => ({
+        pk: primaryKey({ columns: [table.userId, table.credentialID] }),
     })
 );

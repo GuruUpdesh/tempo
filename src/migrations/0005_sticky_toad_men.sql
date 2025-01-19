@@ -1,1 +1,0 @@
-ALTER TABLE `time_entries` ADD `userId` text NOT NULL REFERENCES user(id);

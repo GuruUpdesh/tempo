@@ -3,81 +3,132 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { timeEntries } from "@/db/schema";
-import { parse } from 'csv-parse';
+import { parse } from "csv-parse/sync";
 import { revalidatePath } from "next/cache";
+import z from "zod";
+
+function normalizeColumnName(name: string): string {
+    const trimmedName = name.toLowerCase().replace(/[-_\s]/g, '');
+
+    const columnMappings = {
+        start: 'starttime',
+        timein: 'starttime',
+        end: 'endtime',
+        timeout: 'endtime',
+        desc: 'description'
+    };
+
+    for (const [prefix, mappedName] of Object.entries(columnMappings)) {
+        if (trimmedName.startsWith(prefix)) {
+            return mappedName;
+        }
+    }
+
+    return trimmedName;
+}
+
+function parseTimestamp(timestamp: string | number): Date {
+    // handle Unix timestamp in milliseconds
+    if (!isNaN(Number(timestamp))) {
+        return new Date(Number(timestamp));
+    }
+    
+    // other common formats
+    const date = new Date(timestamp);
+    if (!isNaN(date.getTime())) {
+        return date;
+    }
+    
+    throw new Error(`Unable to parse timestamp: ${timestamp}`);
+}
+
+const recordsSchema = z.array(z.object({
+    description: z.string().optional(),
+    starttime: z.union([z.string(), z.number()]),
+    endtime: z.union([z.string(), z.number()]).optional(),
+}))
 
 export async function importTimeEntries(formData: FormData) {
     const session = await auth();
-    if (!session?.user?.id) throw new Error('Unauthorized');
+    if (!session?.user?.id) {
+        return { data: null, error: "Not authorized" }
+    };
     const userId = session.user.id;
 
-    const file = formData.get('file') as File;
-    if (!file) throw new Error('No file provided');
+    let records;
+    try {
+        const file = formData.get('file') as File;
+        if (!file) return { data: null, error: "No file provided" }
+        if (!file.name.endsWith('.csv')) return { data: null, error: "File must be a CSV" }
+        if (file.size > 1024 * 1024) return { data: null, error: "File must be less than 1MB" } // 1MB limit
+        const text = await file.text();
 
-    const text = await file.text();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const records = await new Promise<any[]>((resolve, reject) => {
-        parse(text, {
-            columns: true,
-            skip_empty_lines: true,
-            trim: true,
-        }, (err, records) => {
-            if (err) reject(err);
-            resolve(records);
+        records = parse(text, {
+            columns: header => header.map(normalizeColumnName),
+            skip_empty_lines: true
         });
-    });
-
-    const validRecords = records
-        .filter(row => {
-            // Check if we have all required fields
-            return row['Date'] && 
-                   row['Time-in'] && 
-                   row['Time-out'] && 
-                   row['Description']?.trim();
-        })
-        .map(row => {
-            try {
-                const date = row['Date'];
-                const timeIn = row['Time-in'];
-                const timeOut = row['Time-out'];
-                const description = row['Description']?.trim();
-
-                const startDateTime = new Date(`${date} ${timeIn}`);
-                const endDateTime = new Date(`${date} ${timeOut}`);
-
-                // Validate that dates are valid
-                if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
-                    return null;
-                }
-
-                return {
-                    userId,
-                    description,
-                    startTime: startDateTime,
-                    endTime: endDateTime,
-                };
-            } catch (error) {
-                console.error('Error processing row:', row, error);
-                return null;
-            }
-        })
-        .filter((record): record is NonNullable<typeof record> => record !== null);
-
-    if (validRecords.length === 0) {
-        throw new Error('No valid records found to import');
+    } catch (error) {
+        console.error(error)
+        return { data: null, error: "Failed to parse CSV" }
     }
 
+    const validationResult = recordsSchema.safeParse(records)
+    if (!validationResult.success) {
+        console.error(validationResult.error)
+        return { data: null, error: "Failed to validate CSV" }
+    }
+    const validatedRecords = validationResult.data;
+
     try {
-        await db.insert(timeEntries).values(validRecords);
+        const normalizedRecords = validatedRecords.map(row => {
+            const description = row['description']?.trim() ?? '';
+            const startTime = parseTimestamp(row['starttime']);
+            const endTime = row['endtime'] ? parseTimestamp(row['endtime']) : null;
+    
+            return { description, startTime, endTime }
+        })
+    
+        const sortedRecords = [...normalizedRecords].sort((a, b) => 
+            a.startTime.getTime() - b.startTime.getTime()
+        );
+    
+        // Check for overlapping times
+        for (let i = 0; i < sortedRecords.length - 1; i++) {
+            const current = sortedRecords[i];
+            const next = sortedRecords[i + 1];
+            
+            if (current.endTime && current.endTime > next.startTime) {
+                throw new Error(`Time entries overlap: "${current.description}" and "${next.description}"`);
+            }
+        }
+    
+        const recordsToImport = sortedRecords
+            .map((record, index) => {   
+                if (!record.endTime && index !== 0) return null;
+                
+                return {
+                    userId,
+                    description: record.description,
+                    startTime: record.startTime,
+                    endTime: record.endTime
+                };
+            })
+            .filter(r => r !== null);
+    
+        if (recordsToImport.length === 0) {
+            throw new Error('No valid records found to import');
+        }
+
+        await db.insert(timeEntries).values(recordsToImport);
         revalidatePath("/")
-        return { 
-            success: true, 
-            count: validRecords.length,
-            totalRows: records.length,
-            skippedRows: records.length - validRecords.length
-        };
+        const data = { 
+            rows: recordsToImport.length,
+            skippedRows: records.length - recordsToImport.length
+        }
+        return { data, error: null };
+
     } catch (error) {
-        console.error('Import error:', error);
-        throw new Error('Failed to import time entries');
+        console.error(error);
+        return { data: null, error: error instanceof Error ? error.message : "Unknown error occurred" }
     }
 }

@@ -1,10 +1,4 @@
 import * as schema from './schema';
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
+import { drizzle } from 'drizzle-orm/neon-http';
 
-const turso = createClient({
-  url: process.env.TURSO_DATABASE_URL!,
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
-
-export const db = drizzle(turso, { schema });
+export const db = drizzle(process.env.DATABASE_URL!, { schema });

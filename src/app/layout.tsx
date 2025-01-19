@@ -3,6 +3,8 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Logo } from "@/components/Icons";
 import User from "@/components/User";
+import Dialogs from "@/components/Dialogs";
+import { Toaster } from "@/components/ui/sonner";
 
 const  MontserratSans = Montserrat({
   variable: "--font-sans",
@@ -30,6 +32,8 @@ export default function RootLayout({
             <User />
           </div>
         </nav>
+        <Dialogs />
+        <Toaster />
         {children}
       </body>
     </html>
