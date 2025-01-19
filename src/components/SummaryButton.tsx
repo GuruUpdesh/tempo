@@ -14,6 +14,7 @@ import { InvoiceIcon } from "./Icons";
 import { TimeEntry } from "@/db/schema";
 import { generateSummary } from "@/actions/ai-summary";
 import { useLocalStorage } from "@uidotdev/usehooks";
+import { toast } from "sonner";
 
 type Props = {
     entries: TimeEntry[];
@@ -40,7 +41,7 @@ export function SummaryButton({ entries }: Props) {
                 saveSummary(result.summary);
                 setIsDialogOpen(true);
             } else {
-                console.error(result.error);
+                toast.error(result.error);
             }
         });
     };

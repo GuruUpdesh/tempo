@@ -13,6 +13,7 @@ import { deleteEntry } from "@/actions/entry";
 import { Trash2Icon, Loader } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
 import { handlePause } from "@/actions/timer";
+import { toast } from "sonner";
 
 type Props = {
     entry: TimeEntry;
@@ -26,7 +27,7 @@ const EntryActions = ({ entry }: Props) => {
         startPauseTransition(async () => {
             const result = await handlePause();
             if (result.error) {
-                console.error(result.error);
+                toast.error(result.error);
             }
         });
     };
@@ -34,6 +35,7 @@ const EntryActions = ({ entry }: Props) => {
     const handleDelete = () => {
         startDeleteTransition(async () => {
             await deleteEntry(entry.id);
+            toast("Time Entry Deleted")
         });
     };
 

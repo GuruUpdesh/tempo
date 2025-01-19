@@ -12,6 +12,7 @@ import PeriodToggle, { Period } from "@/components/PeriodToggle";
 import { getEntries } from "@/actions/entry";
 import { TimezoneHandler } from "@/components/TimezoneHandler";
 import { cookies } from "next/headers";
+import { toast } from "sonner";
 
 type Props = {
     params: Promise<{ period: Period }>;
@@ -23,7 +24,7 @@ export default async function Home({ params }: Props) {
 
     const results = await getEntries(period);
     if (results.error !== null) {
-        console.error(results.error);
+        toast.error(results.error);
         return null;
     }
 
@@ -81,7 +82,7 @@ export default async function Home({ params }: Props) {
                 <TimerActions activeEntry={activeEntry} />
 
                 <section className="w-[900px] flex flex-col px-2">
-                    <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2">
+                    <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <div className="flex items-center gap-4">
                             <PeriodToggle currentPeriod={period} />
                             <SummaryButton entries={entries} />

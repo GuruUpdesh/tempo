@@ -7,6 +7,7 @@ import { TimeEntry } from "@/db/schema";
 import { handlePause, handleStart } from "@/actions/timer";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 type Props = {
     activeEntry: TimeEntry | undefined;
@@ -20,12 +21,12 @@ const TimerActions = ({ activeEntry }: Props) => {
             if (activeEntry) {
                 const result = await handlePause();
                 if (result.error) {
-                    console.error(result.error);
+                    toast.error(result.error);
                 }
             } else {
                 const result = await handleStart();
                 if (result.error) {
-                    console.error(result.error);
+                    toast.error(result.error);
                 }
             }
         });
@@ -35,11 +36,12 @@ const TimerActions = ({ activeEntry }: Props) => {
         <div className="flex gap-4 mb-12">
             <Button
                 onClick={handleClick}
-                aria-label={activeEntry ? "pause" : "play"}
-                size="icon"
+                aria-label={activeEntry ? "stop" : "start"}
                 className={cn("rounded-full", {
-                    "bg-primary text-foreground hover:bg-foreground hover:text-primary": !activeEntry && !isPending
+                    "bg-primary text-foreground hover:bg-foreground hover:text-primary": !activeEntry
                 })}
+                variant="secondary"
+                size="lg"
                 disabled={isPending}
             >
                 {isPending ? (
