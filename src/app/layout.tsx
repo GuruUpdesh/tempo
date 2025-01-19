@@ -5,6 +5,7 @@ import { Logo } from "@/components/Icons";
 import User from "@/components/User";
 import Dialogs from "@/components/Dialogs";
 import { Toaster } from "@/components/ui/sonner";
+import Link from "next/link";
 
 const  MontserratSans = Montserrat({
   variable: "--font-sans",
@@ -44,7 +45,9 @@ export default function RootLayout({
       >
         <nav className="p-4 flex justify-center w-full">
           <div className="max-w-[900px] w-full flex justify-between items-center">
-            <Logo />
+            <Link href="/">
+              <Logo />
+            </Link>
             <User />
           </div>
         </nav>
