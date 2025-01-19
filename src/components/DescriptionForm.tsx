@@ -1,6 +1,7 @@
 "use client";
 import { updateDescription } from "@/actions/entry";
 import { TimeEntry } from "@/db/schema";
+import { LetterText } from "lucide-react";
 import React from "react";
 
 type Props = {
@@ -23,11 +24,13 @@ const DescriptionForm = ({ entry, index }: Props) => {
                 const formData = new FormData(form);
                 handleSubmit(formData);
             }}
+            className="flex items-center gap-2"
         >
+            <LetterText className="w-4 h-4 text-muted-foreground"/>
             <input
                 type="text"
                 name="description"
-                className="w-full bg-transparent outline-none"
+                className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
                 placeholder="Add description..."
                 defaultValue={entry.description || ""}
                 autoFocus={index === 0}

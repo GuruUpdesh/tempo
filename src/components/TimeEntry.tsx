@@ -15,7 +15,7 @@ const TimeEntry = ({ entry, index, period }: Props) => {
     return (
         <tr className="shadow group">
             <EntryTimeCells entry={entry} period={period} showDate={period !== "day"}/>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 w-full">
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 px-1 w-full">
                 <DescriptionForm entry={entry} index={index} />
             </td>
             <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-2 pr-4 w-full rounded-r">

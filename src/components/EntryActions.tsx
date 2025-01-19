@@ -64,7 +64,7 @@ const EntryActions = ({ entry }: Props) => {
                         <VerticalDotsIcon />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
+                <DropdownMenuContent align="center">
                     <DropdownMenuItem
                         onSelect={handleDelete}
                         disabled={isDeleting}

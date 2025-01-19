@@ -6,6 +6,7 @@ import { Period } from "./PeriodToggle";
 import { getTimeZone } from "@/lib/timeConfig";
 import { differenceInMinutes, differenceInSeconds, format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 type Props = {
     entry: TimeEntry;
@@ -22,9 +23,9 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
 
     const getDateDisplay = (date: Date) => {
         const formats = {
-            week: "EEEE",
-            month: "d",
-            year: "MMM d",
+            week: "E io",
+            month: "E, MMM io",
+            year: "MMM io",
             day: "h:mma",
         };
 
@@ -33,7 +34,7 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
 
     const getTimeDisplay = (date: Date | null) => {
         if (!date) return "--";
-        return formatTime(date, timeZone, "h:mma");
+        return formatTime(date, timeZone, "hh:mma");
     };
 
     const getDurationDisplay = (startTime: Date, endTime: Date | null) => {
@@ -59,20 +60,23 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
     return (
         <>
             {showDate && period !== "day" && (
-                <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px] rounded-l">
+                <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 pr-2 pl-6 text-sm text-muted-foreground rounded-l">
                     {getDateDisplay(entry.endTime || entry.startTime)}
                 </td>
             )}
-            <td className={cn("bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 pl-6 text-sm text-foreground w-[90px]", {
-                "rounded-l": period === "day"
-            })}>
+            <td className={cn("bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 text-sm text", {
+                "rounded-l pl-6": period === "day"
+            }, "tabular-nums")}>
                 {getTimeDisplay(entry.startTime)}
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 px-2 text-sm text-foreground">
+                <ArrowRight className="h-4 w-4"/>
+            </td>
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 text-sm text-foreground tabular-nums">
                 {getTimeDisplay(entry.endTime)}
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-4 text-sm text-foreground w-[90px]">
-                {getDurationDisplay(entry.startTime, entry.endTime)}
+            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 pl-2 pr-3 text-sm text-muted-foreground">
+                [ {getDurationDisplay(entry.startTime, entry.endTime)} ]
             </td>
         </>
     );
