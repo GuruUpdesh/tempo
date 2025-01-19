@@ -16,12 +16,17 @@ const DialogClose = DialogPrimitive.Close;
 
 const DialogOverlay = React.forwardRef<
     React.ElementRef<typeof DialogPrimitive.Overlay>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> & {
+        blur?: boolean;
+    }
+>(({ className, blur, ...props }, ref) => (
     <DialogPrimitive.Overlay
         ref={ref}
         className={cn(
             "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+            {
+                "backdrop-blur-lg": blur,
+            },
             className
         )}
         {...props}
@@ -33,10 +38,11 @@ const DialogContent = React.forwardRef<
     React.ElementRef<typeof DialogPrimitive.Content>,
     React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
         showCloseButton?: boolean;
+        blur?: boolean;
     }
->(({ className, children, showCloseButton = true, ...props }, ref) => (
+>(({ className, children, showCloseButton = true, blur = false, ...props }, ref) => (
     <DialogPortal>
-        <DialogOverlay />
+        <DialogOverlay blur={blur}/>
         <DialogPrimitive.Content
             ref={ref}
             className={cn(

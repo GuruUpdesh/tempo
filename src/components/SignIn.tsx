@@ -1,33 +1,61 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { login } from "@/actions/auth";
-import { Logo } from "./Icons";
-import { GithubIcon } from "lucide-react";
+import { AuthProvider, login } from "@/actions/auth";
+import { LogoChip } from "./Icons";
+import { FaGoogle, FaGithub } from "react-icons/fa";
+import { Loader } from "lucide-react";
+import { IconBaseProps } from "react-icons";
+
+type AuthButtonProps = {
+    provider: AuthProvider;
+    Icon: React.ComponentType<IconBaseProps>;
+}
+
+const AuthButton = ({ provider, Icon }: AuthButtonProps) => {
+    const [isPending, startTransition] = useTransition();
+
+    const handleLogin = (provider: AuthProvider) => {
+        startTransition(() => {
+            login(provider);
+        });
+    };
+    return (
+        <Button
+            onClick={() => handleLogin(provider)}
+            className="w-full flex items-center justify-center gap-2 bg-card-foreground border-t border-border capitalize"
+            variant="secondary"
+            disabled={isPending}
+            aria-label={`Sign in with ${provider}`}
+        >
+            {isPending ? (
+                <Loader className="h-4 w-4 animate-spin" />
+            ) : (
+                <Icon />
+            )}
+            {provider}
+        </Button>
+    );
+};
 
 const SignIn = () => {
     return (
         <Dialog open={true}>
-            <DialogContent className="sm:max-w-[425px] gap-4 p-8" showCloseButton={false}>
-                <div className="flex flex-col items-center gap-4 text-center">
-                    <Logo />
+            <DialogContent blur={true} className="sm:max-w-[425px] gap-4 p-8 overflow-hidden bg-card border-l-0 border-r-0 border-b-0 sm:rounded-3xl" showCloseButton={false}>
+                <div className="flex flex-col items-center gap-2 text-center">
+                    <LogoChip />
+                    <h1 className="text-2xl font-bold mt-2">Welcome back</h1>
+                    <p>To continue either sign in or sign up</p>
                     <DialogTitle className="hidden">
                         Sign In
                     </DialogTitle>
-                    <p className="text-muted-foreground text-sm">
-                        To access your account, please continue with Github.
-                    </p>
                 </div>
-
-                <Button
-                    onClick={login}
-                    className="w-full flex items-center justify-center"
-                >
-                    <GithubIcon className="w-5 h-5" />
-                    Sign in with Github
-                </Button>
+                <div className="flex flex-col gap-4 mt-4">
+                    <AuthButton provider="google" Icon={FaGoogle} />
+                    <AuthButton provider="github" Icon={FaGithub} />
+                </div>
             </DialogContent>
         </Dialog>
     );
