@@ -6,8 +6,8 @@ export default function PrivacyPage() {
         
             <div className="prose prose-lg">
                 <p className="mb-6">
-                Welcome to Tempo (the "Site"), a time logging application ("we", "us", and/or "our"). 
-                Tempo provides a platform for tracking and managing time (the "Services"). We value your 
+                Welcome to Tempo (the &quot;Site&quot;), a time logging application (&quot;we&quot;, &quot;us&quot;, and/or &quot;our&quot;). 
+                Tempo provides a platform for tracking and managing time (the &quot;Services&quot;). We value your 
                 privacy and are dedicated to protecting your personal data. This Privacy Policy covers 
                 how we collect, handle, and disclose personal data on our Platform.
                 </p>
