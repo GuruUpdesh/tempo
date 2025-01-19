@@ -14,6 +14,22 @@ const  MontserratSans = Montserrat({
 export const metadata: Metadata = {
   title: "Tempo",
   description: "A simple, modern, and fast hours log",
+  icons: {
+    icon: [
+      {
+        rel: "icon",
+        type: "image/vnd",
+        media: "(prefers-color-scheme: light)",
+        url: "/favicon.ico",
+      },
+      {
+        rel: "icon",
+        type: "image/vnd",
+        media: "(prefers-color-scheme: dark)",
+        url: "/favicon-dark.ico",
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
