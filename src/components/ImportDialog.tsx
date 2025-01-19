@@ -76,7 +76,7 @@ const ImportDialog = () => {
                 `Imported ${rows} entries${skippedRows > 0 ? ` (${skippedRows} skipped)` : ''}`
             );
             close(KEY);
-        } catch (error) {
+        } catch {
             setImportState({ 
                 status: 'error', 
                 error: 'Failed to import CSV file' 
