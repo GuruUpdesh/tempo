@@ -78,7 +78,7 @@ export function SummaryButton({ entries }: Props) {
                     </DialogHeader>
 
                     <div className="relative">
-                        <pre className="mt-2 rounded-lg bg-card border-t border-border p-4 whitespace-pre-wrap font-mono text-sm">
+                        <pre className="mt-2 rounded-lg bg-background p-4 whitespace-pre-wrap font-mono text-sm">
                             {summary}
                         </pre>
 
@@ -95,6 +95,7 @@ export function SummaryButton({ entries }: Props) {
                         <Button
                             onClick={() => handleGenerateSummary(true)}
                             disabled={isPending}
+                            variant="secondary"
                         >
                             {isPending ? (
                                 <Loader className="mr-2 h-4 w-4 animate-spin" />

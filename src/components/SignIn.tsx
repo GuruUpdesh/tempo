@@ -43,7 +43,7 @@ const AuthButton = ({ provider, Icon }: AuthButtonProps) => {
 const SignIn = () => {
     return (
         <Dialog open={true}>
-            <DialogContent blur={true} className="sm:max-w-[425px] gap-4 p-8 overflow-hidden bg-card border-l-0 border-r-0 border-b-0 sm:rounded-3xl" showCloseButton={false}>
+            <DialogContent blur={true} className="gap-4 p-8" showCloseButton={false}>
                 <div className="flex flex-col items-center gap-2 text-center">
                     <LogoChip />
                     <h1 className="text-2xl font-bold mt-2">Welcome back</h1>

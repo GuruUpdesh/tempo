@@ -97,7 +97,7 @@ const ImportDialog = () => {
                 </DialogHeader>
                 <div
                     className={cn(
-                        "mt-4 p-8 border-2 border-dashed rounded-lg transition-all",
+                        "mt-4 p-8 border border-dashed rounded-lg transition-all bg-background",
                         "relative flex flex-col items-center justify-center gap-2",
                         dragActive && "border-primary/50 bg-primary/5",
                         !dragActive && "border-border",
