@@ -37,8 +37,8 @@ const TimerActions = ({ activeEntry }: Props) => {
             <Button
                 onClick={handleClick}
                 aria-label={activeEntry ? "stop" : "start"}
-                className={cn("rounded-full", {
-                    "bg-primary text-foreground hover:bg-foreground hover:text-primary": !activeEntry
+                className={cn("rounded-full border-t border-border bg-card", {
+                    "bg-primary text-foreground hover:bg-foreground hover:text-primary border-primary-foreground": !activeEntry
                 })}
                 variant="secondary"
                 size="lg"

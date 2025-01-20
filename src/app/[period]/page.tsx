@@ -77,7 +77,7 @@ export default async function Home({ params }: Props) {
                     </div>
                     <Timer activeEntry={activeEntry} initialTime={timer} />
                     <p className="mt-4">
-                        Total time tracked today: {formatDuration(todayTotal)}
+                        Time tracked today {formatDuration(todayTotal)}
                     </p>
                 </div>
                 <TimerActions activeEntry={activeEntry} />
@@ -90,9 +90,6 @@ export default async function Home({ params }: Props) {
                         </div>
                         <div className="flex items-center gap-4">
                             <p>
-                                <span className="text-muted-foreground">
-                                    Total:
-                                </span>{" "}
                                 {formatDuration(allTimeTotal)}
                             </p>
                         </div>

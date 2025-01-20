@@ -33,8 +33,8 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
     };
 
     const getTimeDisplay = (date: Date | null) => {
-        if (!date) return "--";
-        return formatTime(date, timeZone, "hh:mma");
+        if (!date) return "--:--";
+        return formatTime(date, timeZone, "hh:mm");
     };
 
     const getDurationDisplay = (startTime: Date, endTime: Date | null) => {
@@ -76,7 +76,7 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
                 {getTimeDisplay(entry.endTime)}
             </td>
             <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 pl-2 pr-3 text-sm text-muted-foreground">
-                [ {getDurationDisplay(entry.startTime, entry.endTime)} ]
+                {getDurationDisplay(entry.startTime, entry.endTime)}
             </td>
         </>
     );
