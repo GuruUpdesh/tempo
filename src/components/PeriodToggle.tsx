@@ -11,7 +11,7 @@ const PERIODS: { label: string; value: Period }[] = [
 ];
 
 type Props = {
-    currentPeriod: Period;
+    currentPeriod?: Period;
 };
 
 const PeriodToggle = ({ currentPeriod }: Props) => {
@@ -21,9 +21,10 @@ const PeriodToggle = ({ currentPeriod }: Props) => {
                 <Link
                     key={value}
                     href={`/${value}`}
+                    prefetch={true}
                     className={cn(
                         "px-3 py-1.5 text-sm font-medium rounded-md border-b border-transparent text-muted-foreground transition-all hover:bg-accent hover:text-foreground",
-                        {"bg-accent border-primary text-foreground" : currentPeriod === value}
+                        {"bg-accent text-foreground" : currentPeriod === value}
                     )}
                 >
                     {label}

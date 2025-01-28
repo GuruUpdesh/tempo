@@ -60,20 +60,32 @@
   }
 }
 
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
-  width: 0;
+*::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--accent));
 }
 
-/* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+*::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary));
+}
+
+.animate-skeleton {
+  animation: skeletonPulse 2s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-color: hsl(var(--card));
+  }
+  50% {
+    background-color: hsl(var(--card-foreground));
+  }
+  
 }

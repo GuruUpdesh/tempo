@@ -13,8 +13,8 @@ import { Loader } from "lucide-react";
 import { InvoiceIcon } from "./Icons";
 import { TimeEntry } from "@/db/schema";
 import { generateSummary } from "@/actions/ai-summary";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { toast } from "sonner";
+import { useSummaryStore } from "@/store/summary";
 
 type Props = {
     entries: TimeEntry[];
@@ -22,10 +22,7 @@ type Props = {
 
 export function SummaryButton({ entries }: Props) {
     const [isPending, startTransition] = useTransition();
-    const [summary, saveSummary] = useLocalStorage<string | null>(
-        "timelog-summary",
-        null
-    );
+    const { summary, setSummary } = useSummaryStore();
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
 
@@ -38,7 +35,7 @@ export function SummaryButton({ entries }: Props) {
         startTransition(async () => {
             const result = await generateSummary(entries);
             if (result.data) {
-                saveSummary(result.data);
+                setSummary(result.data);
                 setIsDialogOpen(true);
             } else {
                 toast.error(result.error);
@@ -70,7 +67,7 @@ export function SummaryButton({ entries }: Props) {
             </button>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="max-w-2xl">
+                <DialogContent className="max-w-2xl max-h-[90%]">
                     <DialogHeader>
                         <DialogTitle className="flex gap-2 items-center">
                             <InvoiceIcon />
@@ -79,7 +76,7 @@ export function SummaryButton({ entries }: Props) {
                     </DialogHeader>
 
                     <div className="relative">
-                        <pre className="mt-2 rounded-lg bg-background p-4 whitespace-pre-wrap font-mono text-sm">
+                        <pre className="mt-2 rounded-lg bg-background p-4 whitespace-pre-wrap font-mono text-sm max-h-[600px] overflow-y-auto">
                             {summary}
                         </pre>
 

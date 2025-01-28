@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         hostname: "avatars.githubusercontent.com",
       }
     ]
-  }
+  },
 };
 
 export default nextConfig;
