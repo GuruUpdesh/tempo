@@ -4,7 +4,7 @@ import TimeEntries from "../../components/timeEntry/TimeEntries";
 import { TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/timer/TimerActions";
 import Timer from "@/components/timer/Timer";
-import { differenceInMinutes, isToday } from "date-fns";
+import { differenceInMinutes } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
 import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
@@ -56,10 +56,6 @@ export default async function Home({ params }: Props) {
     const cookieStore = await cookies()
     const timer = cookieStore.get("timer")?.value
 
-    const todayTotal = calculateTotalTime(entries, (entry) =>
-        isToday(entry.startTime)
-    );
-
     const allTimeTotal = calculateTotalTime(entries);
 
     return (
@@ -76,9 +72,6 @@ export default async function Home({ params }: Props) {
                         )}
                     </div>
                     <Timer activeEntry={activeEntry} initialTime={timer} />
-                    <p className="mt-4">
-                        Time tracked today {formatDuration(todayTotal)}
-                    </p>
                 </div>
                 <TimerActions activeEntry={activeEntry} />
 

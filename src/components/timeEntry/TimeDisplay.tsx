@@ -23,9 +23,9 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
 
     const getDateDisplay = (date: Date) => {
         const formats = {
-            week: "E io",
-            month: "E, MMM io",
-            year: "MMM io",
+            week: "E d",
+            month: "MMM d",
+            year: "MMM d, y",
             day: "h:mma",
         };
 
