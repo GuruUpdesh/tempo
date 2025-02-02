@@ -36,9 +36,6 @@ export default function Home() {
                             0
                         </div>
                     </h1>
-                    <p className="mt-4">
-                        Time tracked today 0h 0m
-                    </p>
                 </div>
                 <div className="flex gap-4 mb-12">
                     <Button
