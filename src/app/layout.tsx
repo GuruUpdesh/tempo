@@ -6,6 +6,7 @@ import User from "@/components/nav/User";
 import Dialogs from "@/components/dialogs/Dialogs";
 import { Toaster } from "@/components/ui/sonner";
 import Link from "next/link";
+import { Analytics } from '@vercel/analytics/next';
 
 const  MontserratSans = Montserrat({
   variable: "--font-sans",
@@ -53,6 +54,7 @@ export default function RootLayout({
         </nav>
         <Dialogs />
         <Toaster />
+        <Analytics />
         {children}
       </body>
     </html>
