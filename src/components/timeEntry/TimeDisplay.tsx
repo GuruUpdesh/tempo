@@ -60,22 +60,22 @@ export function EntryTimeCells({ entry, period, showDate = true }: Props) {
     return (
         <>
             {showDate && period !== "day" && (
-                <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 pr-2 pl-6 text-sm text-muted-foreground rounded-l">
+                <td className="group-hover:bg-card-foreground whitespace-nowrap py-4 pr-2 pl-6 text-sm text-muted-foreground">
                     {getDateDisplay(entry.endTime || entry.startTime)}
                 </td>
             )}
-            <td className={cn("bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 text-sm text", {
-                "rounded-l pl-6": period === "day"
+            <td className={cn("group-hover:bg-card-foreground whitespace-nowrap py-4 text-sm text", {
+                "pl-6": period === "day"
             }, "tabular-nums")}>
                 {getTimeDisplay(entry.startTime)}
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 px-2 text-sm text-foreground">
+            <td className="group-hover:bg-card-foreground whitespace-nowrap py-4 px-2 text-sm text-foreground">
                 <ArrowRight className="h-4 w-4"/>
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 text-sm text-foreground tabular-nums">
+            <td className="group-hover:bg-card-foreground whitespace-nowrap py-4 text-sm text-foreground tabular-nums">
                 {getTimeDisplay(entry.endTime)}
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 pl-2 pr-3 text-sm text-muted-foreground">
+            <td className="group-hover:bg-card-foreground whitespace-nowrap py-4 pl-2 pr-3 text-sm text-muted-foreground">
                 {getDurationDisplay(entry.startTime, entry.endTime)}
             </td>
         </>

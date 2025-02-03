@@ -10,8 +10,8 @@ type Props = {
 
 const TimeEntries = async ({ entries, period }: Props) => {
     return (
-        <table className="w-full border-separate border-spacing-y-2">
-            <tbody className="space-y-2">
+        <table className="w-full rounded-xl overflow-clip bg-card shadow mb-2">
+            <tbody className="">
                 {entries.map((entry, index) => (
                     <TimeEntry
                         key={entry.id}

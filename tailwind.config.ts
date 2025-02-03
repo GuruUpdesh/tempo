@@ -20,7 +20,8 @@ export default {
   			border: 'hsl(var(--border))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+  				foreground: 'hsl(var(--card-foreground))',
+				darker: 'hsl(var(--card-darker))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',

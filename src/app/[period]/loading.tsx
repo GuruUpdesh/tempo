@@ -63,11 +63,11 @@ export default function Home() {
                             </p>
                         </div>
                     </header>
-                    <div className="flex flex-col gap-2 my-2">
+                    <div className="flex flex-col mb-2 rounded-lg overflow-clip">
                         {Array.from({ length: 5 }).map((_, index) => (
                             <div
                                 key={index}
-                                className="w-full h-[57px] bg-card rounded-md animate-skeleton border-t border-border"
+                                className="w-full h-[57px] bg-card animate-skeleton"
                                 style={{
                                     animationDelay: `${index * 100}ms`
                                 }}

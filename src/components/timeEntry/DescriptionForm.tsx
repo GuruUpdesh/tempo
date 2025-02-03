@@ -13,6 +13,7 @@ const DescriptionForm = ({ entry, index }: Props) => {
 
     async function handleSubmit(formData: FormData) {
         const description = formData.get('description') as string;
+        if (entry.description === description) return;
         await updateDescription(entry.id, description);
     }
 
@@ -26,7 +27,7 @@ const DescriptionForm = ({ entry, index }: Props) => {
             }}
             className="flex items-center gap-2"
         >
-            <LetterText className="w-4 h-4 text-muted-foreground"/>
+            <LetterText className="w-4 h-4"/>
             <input
                 type="text"
                 name="description"

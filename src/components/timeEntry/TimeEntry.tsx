@@ -15,8 +15,8 @@ type Props = {
 const TimeEntry = ({ entry, index, period }: Props) => {
     const activeEntry = !entry.endTime && index === 0
     return (
-        <tr className={cn("shadow group relative z-0", {
-            "sticky top-[58px] z-10 border-b border-b-background": activeEntry
+        <tr className={cn("group relative z-0 even:bg-card-darker", {
+            "sticky top-[58px] z-10": activeEntry
         })}>
             <td className={cn("absolute -left-8 bg-primary w-4 h-4 top-[50%] translate-y-[-50%] rounded-full",
                 {
@@ -24,10 +24,10 @@ const TimeEntry = ({ entry, index, period }: Props) => {
                 }
             )}/>
             <EntryTimeCells entry={entry} period={period} showDate={period !== "day"}/>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border py-4 px-1 w-full">
+            <td className="group-hover:bg-card-foreground whitespace-nowrap py-4 px-1 w-full">
                 <DescriptionForm entry={entry} index={index} />
             </td>
-            <td className="bg-card group-hover:bg-card-foreground whitespace-nowrap border-t border-border p-2 pr-4 w-full rounded-r">
+            <td className="group-hover:bg-card-foreground whitespace-nowrap p-2 pr-4 w-full">
                 {index === 0 && <EntryActions entry={entry} />}
             </td>
         </tr>
