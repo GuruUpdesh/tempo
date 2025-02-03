@@ -1,5 +1,5 @@
 import React from "react";
-import TimeEntries from "./timeEntry/TimeEntries";
+import EntriesTable from "./timeEntry/EntriesTable";
 import { SummaryButton } from "./SummaryButton";
 import PeriodToggle from "./PeriodToggle";
 import TotalTimeForPeriod from "./TotalTimeForPeriod";
@@ -24,7 +24,7 @@ const TimeEntryTable = async ({ initialEntries }: Props) => {
                     <TotalTimeForPeriod period={period} entries={entries} />
                 </div>
             </header>
-            <TimeEntries entries={entries} period={period} />
+            <EntriesTable entries={entries} period={period} />
         </section>
     );
 };

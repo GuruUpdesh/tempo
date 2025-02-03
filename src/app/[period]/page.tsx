@@ -1,6 +1,6 @@
 import React from "react";
 
-import TimeEntries from "../../components/timeEntry/TimeEntries";
+import EntriesTable from "../../components/timeEntry/EntriesTable";
 import { TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/timer/TimerActions";
 import Timer from "@/components/timer/Timer";
@@ -87,7 +87,7 @@ export default async function Home({ params }: Props) {
                             </p>
                         </div>
                     </header>
-                    <TimeEntries entries={entries} period={period} />
+                    <EntriesTable entries={entries} period={period} />
                 </section>
             </main>
         </div>
