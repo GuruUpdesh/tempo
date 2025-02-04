@@ -49,7 +49,7 @@ export default function Home() {
                     </Button>
                 </div>
 
-                <section className="w-[900px] flex flex-col px-2">
+                <section className="w-[1100px] flex flex-col px-2 pt-16">
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <div className="flex items-center gap-4">
                             <PeriodToggle currentIndex={0}/>

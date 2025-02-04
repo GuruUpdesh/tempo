@@ -3,18 +3,27 @@
 import React from "react";
 import { useTableStore } from "@/store/table";
 import { cn } from "@/lib/utils";
+import { useSearchStore } from "@/store/search";
 
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
     children: React.ReactNode;
+    entryId: number;
     day: string;
 }
 
 export const EntryRow = React.forwardRef<HTMLTableRowElement, RowProps>(
-    ({ children, day, ...props }, ref) => {
+    ({ children, entryId, day, ...props }, ref) => {
         const setDay = useTableStore((state) => state.setDay);
+        const { searchResults } = useSearchStore();
 
         function setCurrentDay() {
             setDay(day);
+        }
+
+        const result = searchResults.get(entryId);
+        
+        if (!result) {
+            return null;
         }
 
         return (
