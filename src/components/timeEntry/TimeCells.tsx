@@ -20,10 +20,10 @@ export function TimeCells({ entry, period, day, showDate = true }: Props) {
 
     const getDateDisplay = (date: Date) => {
         const formats = {
+            day: "h:mma",
             week: "E d",
             month: "MMM d",
             year: "MMM d, y",
-            day: "h:mma",
         };
 
         return formatTime(date, timeZone, formats[period]);

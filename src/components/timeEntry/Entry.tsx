@@ -30,7 +30,7 @@ const Entry = ({ entry, index, period, day }: Props) => {
                 <DescriptionForm entry={entry} index={index} />
             </td>
             <td className="whitespace-nowrap p-2 pr-4 w-full">
-                {index === 0 && <EntryActions entry={entry} />}
+                <EntryActions entry={entry} isFirst={index === 0} />
             </td>
         </EntryRow>
     );

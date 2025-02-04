@@ -9,6 +9,7 @@ export const timeEntries = pgTable("time_entries", {
     description: text("description"),
     startTime: timestamp('start_time').notNull(),
     endTime: timestamp('end_time'),
+    deletedAt: timestamp('deleted_at')
 });
 
 export type TimeEntry = InferSelectModel<typeof timeEntries>;

@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { timeEntries } from "@/db/schema";
 import { ActionResponse } from "@/lib/types";
-import { desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function handlePause(): ActionResponse<boolean> {
@@ -41,7 +41,7 @@ export async function handleStart(): ActionResponse<boolean> {
     }
 
     const activeEntry = await db.query.timeEntries.findFirst({
-        where: isNull(timeEntries.endTime),
+        where: and(isNull(timeEntries.endTime), isNull(timeEntries.deletedAt)),
         orderBy: [desc(timeEntries.startTime)],
     });
 
