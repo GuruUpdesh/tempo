@@ -1,6 +1,6 @@
 import React from "react";
 
-import EntriesTable from "../../components/timeEntry/EntriesTable";
+import EntriesTable from "@/components/timeEntry/EntriesTable";
 import { TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/timer/TimerActions";
 import Timer from "@/components/timer/Timer";
@@ -16,14 +16,20 @@ import { Period } from "@/lib/types";
 import PeriodToggle from "@/components/PeriodToggle";
 
 type Props = {
-    params: Promise<{ period: Period }>;
+    params: Promise<{ 
+        period: Period;
+        index: string;
+    }>;
 };
 
 export default async function Home({ params }: Props) {
     const session = await auth();
-    const { period } = await params;
 
-    const results = await getEntries(period);
+    const pageParams = await params;
+    const { period } = pageParams;
+    const index = parseInt(pageParams.index || "0");
+
+    const results = await getEntries(period, index);
     if (results.error !== null) {
         toast.error(results.error);
         return null;
@@ -78,7 +84,7 @@ export default async function Home({ params }: Props) {
                 <section className="w-[900px] flex flex-col px-2">
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <div className="flex items-center gap-4">
-                            <PeriodToggle currentPeriod={period} />
+                            <PeriodToggle currentPeriod={period} currentIndex={index} />
                             <SummaryButton entries={entries} />
                         </div>
                         <div className="flex items-center gap-4">

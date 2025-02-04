@@ -15,7 +15,7 @@ export default async function History() {
     const session = await auth();
     const period = "year";
 
-    const results = await getEntries(period, true);
+    const results = await getEntries(period, 0, true);
     if (results.error !== null) {
         toast.error(results.error);
         return null;

@@ -12,6 +12,7 @@ import { ActionResponse, Period } from "@/lib/types";
 
 export async function getEntries(
     period: Period,
+    index: number,
     showDeleted = false
 ): ActionResponse<TimeEntry[]> {
     const session = await auth();
@@ -22,7 +23,7 @@ export async function getEntries(
     const cookieStore = await cookies();
     const timezone = cookieStore.get("timezone")?.value || "UTC";
 
-    const { start: localStart, end: localEnd } = getDateRange(period, timezone);
+    const { start: localStart, end: localEnd } = getDateRange(period, timezone, index);
     const start = new TZDate(localStart, "UTC");
     const end = new TZDate(localEnd, "UTC");
 

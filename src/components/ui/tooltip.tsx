@@ -33,6 +33,7 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName
 type Props = {
     children: React.ReactNode;
     title: string | React.ReactNode;
+    shortcut?: string;
 };
 
 const DefaultTooltip = ({ children, title }: Props) => (
