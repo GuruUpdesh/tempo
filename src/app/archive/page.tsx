@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 import { getEntries } from "@/actions/entry";
 import { TimezoneHandler } from "@/components/TimezoneHandler";
 import { toast } from "sonner";
-import { ArrowLeftIcon, Trash2Icon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
