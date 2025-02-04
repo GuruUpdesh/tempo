@@ -106,7 +106,7 @@ export function PeriodCalendar({ period, currentIndex }: Props) {
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <DefaultTooltip title="Custom Period">
-                <PopoverTrigger className="flex items-center gap-1 px-1.5 py-1.5 text-muted-foreground transition-all hover:bg-accent hover:text-foreground data-[state=open]:text-foreground rounded">
+                <PopoverTrigger className="flex items-center gap-1 px-1.5 py-1 text-muted-foreground transition-all hover:bg-accent hover:text-foreground data-[state=open]:text-foreground rounded">
                     <CalendarIcon />
                     {currentIndex > 0 && (
                         <span className="text-sm text-muted-foreground">

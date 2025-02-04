@@ -4,15 +4,16 @@ import React from "react";
 import { useTableStore } from "@/store/table";
 import { cn } from "@/lib/utils";
 import { useSearchStore } from "@/store/search";
+import { TimeEntry } from "@/db/schema";
 
 interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
     children: React.ReactNode;
-    entryId: number;
+    entry: TimeEntry;
     day: string;
 }
 
 export const EntryRow = React.forwardRef<HTMLTableRowElement, RowProps>(
-    ({ children, entryId, day, ...props }, ref) => {
+    ({ children, entry, day, ...props }, ref) => {
         const setDay = useTableStore((state) => state.setDay);
         const { searchResults } = useSearchStore();
 
@@ -20,9 +21,9 @@ export const EntryRow = React.forwardRef<HTMLTableRowElement, RowProps>(
             setDay(day);
         }
 
-        const result = searchResults.get(entryId);
+        const result = searchResults.get(entry.id);
         
-        if (!result) {
+        if (!result && !entry.deletedAt) {
             return null;
         }
 

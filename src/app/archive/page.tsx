@@ -28,7 +28,7 @@ export default async function History() {
             <TimezoneHandler />
             {!session && <SignIn />}
             <main className="flex flex-col items-center mx-auto h-full">
-                <section className="w-[900px] flex flex-col px-2">
+                <section className="w-[1100px] flex flex-col px-2">
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <Button variant="ghost" asChild>
                             <Link href="/" >
