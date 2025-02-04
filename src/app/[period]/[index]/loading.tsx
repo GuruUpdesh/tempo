@@ -52,7 +52,7 @@ export default function Home() {
                 <section className="w-[900px] flex flex-col px-2">
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <div className="flex items-center gap-4">
-                            <PeriodToggle />
+                            <PeriodToggle currentIndex={0}/>
                             <span className="text-muted-foreground">
                                 <InvoiceIcon />
                             </span>

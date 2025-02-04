@@ -21,6 +21,7 @@ import {
 } from "date-fns";
 import { useState } from "react";
 import { Period } from "@/lib/types";
+import { DefaultTooltip } from "./ui/tooltip";
 
 type Props = {
     period: Period;
@@ -104,14 +105,16 @@ export function PeriodCalendar({ period, currentIndex }: Props) {
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger className="flex items-center gap-1 px-1.5 py-1.5 text-muted-foreground transition-all hover:bg-accent hover:text-foreground data-[state=open]:text-foreground rounded">
-                <CalendarIcon />
-                {currentIndex > 0 && (
-                    <span className="text-sm text-muted-foreground">
-                        {getDateLabel()}
-                    </span>
-                )}
-            </PopoverTrigger>
+            <DefaultTooltip title="Custom Period">
+                <PopoverTrigger className="flex items-center gap-1 px-1.5 py-1.5 text-muted-foreground transition-all hover:bg-accent hover:text-foreground data-[state=open]:text-foreground rounded">
+                    <CalendarIcon />
+                    {currentIndex > 0 && (
+                        <span className="text-sm text-muted-foreground">
+                            {getDateLabel()}
+                        </span>
+                    )}
+                </PopoverTrigger>
+            </DefaultTooltip>
             <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                     mode="single"

@@ -15,6 +15,7 @@ import { TimeEntry } from "@/db/schema";
 import { generateSummary } from "@/actions/ai-summary";
 import { toast } from "sonner";
 import { useSummaryStore } from "@/store/summary";
+import { DefaultTooltip } from "./ui/tooltip";
 
 type Props = {
     entries: TimeEntry[];
@@ -53,18 +54,20 @@ export function SummaryButton({ entries }: Props) {
 
     return (
         <>
-            <button
-                onClick={() => handleGenerateSummary()}
-                disabled={isPending}
-                aria-label="Generate summary"
-                className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-                {isPending ? (
-                    <Loader className="h-6 w-6 animate-spin" />
-                ) : (
-                    <InvoiceIcon />
-                )}
-            </button>
+            <DefaultTooltip title="Summarize Period">
+                <button
+                    onClick={() => handleGenerateSummary()}
+                    disabled={isPending}
+                    aria-label="Generate summary"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                    {isPending ? (
+                        <Loader className="h-6 w-6 animate-spin" />
+                    ) : (
+                        <InvoiceIcon />
+                    )}
+                </button>
+            </DefaultTooltip>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <DialogContent className="max-w-2xl max-h-[90%]">
