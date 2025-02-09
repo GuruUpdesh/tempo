@@ -1,6 +1,5 @@
 import React from "react";
 
-import EntriesTable from "../../components/timeEntry/EntriesTable";
 import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
 import { getEntries } from "@/actions/entry";
@@ -9,6 +8,7 @@ import { toast } from "sonner";
 import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import EntriesTable from "@/components/timeEntry/EntriesTable";
 
 
 export default async function History() {
