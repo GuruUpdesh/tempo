@@ -35,7 +35,7 @@ export default function NavigationBar({ children }: Props) {
             )}
         >
             <div className="max-w-[1100px] w-full flex justify-between items-center">
-                <Link href="/">
+                <Link href="/" aria-label="Return to Tempo homepage">
                     <Logo />
                 </Link>
                 {children}

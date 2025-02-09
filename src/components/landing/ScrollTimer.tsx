@@ -62,6 +62,7 @@ export function ScrollTimer() {
                     )}
                     variant="secondary"
                     size="lg"
+                    aria-label={entry ? "Pause timer" : "Start timer"}
                 >
                     {entry ? <PauseIcon /> : <PlayIcon />}
                 </Button>
