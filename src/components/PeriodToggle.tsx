@@ -31,26 +31,26 @@ const PeriodToggle = ({ currentPeriod, currentIndex }: Props) => {
                         <ChevronLeft size={20} />
                     </Link>
                 </DefaultTooltip>
-                <PeriodCalendar
-                    period={currentPeriod || "day"}
-                    currentIndex={currentIndex}
-                />
                 {PERIODS.map(({ label, value }) => (
                     <Link
-                        key={value}
-                        href={`/${value}/0`}
-                        prefetch={true}
-                        className={cn(
-                            "flex items-center px-3 py-1.5 text-sm font-medium rounded-md border-b border-transparent text-muted-foreground transition-all hover:bg-accent hover:text-foreground",
-                            {
-                                "bg-accent text-foreground":
-                                    currentPeriod === value,
-                            }
-                        )}
+                    key={value}
+                    href={`/${value}/0`}
+                    prefetch={true}
+                    className={cn(
+                        "flex items-center px-3 py-1.5 text-sm font-medium rounded-md border-b border-transparent text-muted-foreground transition-all hover:bg-accent hover:text-foreground",
+                        {
+                            "bg-accent text-foreground":
+                            currentPeriod === value,
+                        }
+                    )}
                     >
                         {label}
                     </Link>
                 ))}
+                <PeriodCalendar
+                    period={currentPeriod || "day"}
+                    currentIndex={currentIndex}
+                />
                 <DefaultTooltip
                     title={
                         currentIndex === 0
