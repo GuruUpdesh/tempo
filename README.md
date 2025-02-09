@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tempo
+Tempo is a free and open source time tracking tool designed for freelancers, contractors, and entrepreneurs who need a simple yet powerful way to log their work hours.
 
-## Getting Started
+[tempotime.app](https://www.tempotime.app/)
 
-First, run the development server:
+![Timesheet](https://github.com/user-attachments/assets/5a97e905-cc0a-4401-ae27-14e34facecdc)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
+1. ⏱️ **Built-in Timer:** Simple and elegant, fully integrated timer for accurate time tracking
+2. 🤖 **AI Summaries:** Summarize your day's work to streamline communication and reporting
+3. 🔍 **Search:** Quickly find and analyze time spent on specific projects or tasks
+4. 📊 **Timesheets:** Filter and view your hours across different time periods
+5. 📝 **Detailed Logging:** Add descriptions and context to each time entry
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Overview
+Tempo simplifies time tracking with an intuitive interface and focused feature set. Built for professionals who need to maintain accurate work records without the complexity of traditional time management tools. The application prioritizes user privacy, transparency, and ease of use.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+###
+License
+This project is MIT licensed - see the [LICENSE.md](https://github.com/GuruUpdesh/tempo/blob/main/LICENSE) file for details.
