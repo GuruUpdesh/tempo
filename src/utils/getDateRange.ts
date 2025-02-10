@@ -10,8 +10,12 @@ import {
     subWeeks,
     subMonths,
     subYears,
+    min,
+    max,
+    format,
 } from "date-fns";
 import { tz } from "@date-fns/tz";
+import { TimeEntry } from "@/db/schema";
 
 export const getDateRange = (period: string, timeZone: string, index: number = 0) => {
     const tzOption = { in: tz(timeZone) };
@@ -42,3 +46,13 @@ export const getDateRange = (period: string, timeZone: string, index: number = 0
             return {start: today, end: today}
     }
 };
+
+export function getEntryRange(entries: TimeEntry[]) {
+    if (!entries.length) return 'No entries';
+    
+    const dates = entries.map(entry => entry.startTime);
+    const minDate = min(dates);
+    const maxDate = max(dates);
+    
+    return [format(minDate, 'MMM d'), format(maxDate, 'MMM d')];
+}

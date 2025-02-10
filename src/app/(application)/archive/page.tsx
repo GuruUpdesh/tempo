@@ -29,13 +29,13 @@ export default async function History() {
                 <section className="w-[1100px] flex flex-col px-2">
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <BackButton />
-                        <h1 className="text-lg font-bold flex items-center gap-2">
-                            Archived Entries
-                        </h1>
                         <p className="text-sm text-muted-foreground">
                             Archives last 30 days
                         </p>
                     </header>
+                    <h1 className="text-3xl mb-6">
+                        Archived Entries
+                    </h1>
                     <EntriesTable entries={entries} period={period} />
                 </section>
             </main>
