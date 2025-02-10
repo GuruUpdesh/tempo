@@ -61,7 +61,7 @@ export default async function Home({ params }: Props) {
                 <TimerActions activeEntry={activeEntry} />
 
                 <section className="w-[1100px] flex flex-col px-2 pt-16">
-                    <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
+                    <header className="flex justify-between items-center w-full sticky top-[69px] bg-background py-2 z-10">
                         <div className="flex items-center gap-4">
                             <PeriodToggle currentPeriod={period} currentIndex={index} />
                             <SummaryButton entries={entries} />

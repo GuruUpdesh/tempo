@@ -7,9 +7,13 @@ import { cn } from "@/lib/utils";
 
 type Props = {
     children: React.ReactNode;
+    variant?: "default" | "landing";
 };
 
-export default function NavigationBar({ children }: Props) {
+export default function NavigationBar({
+    children,
+    variant = "default",
+}: Props) {
     const [isSticky, setIsSticky] = useState(false);
 
     useEffect(() => {
@@ -29,8 +33,9 @@ export default function NavigationBar({ children }: Props) {
             className={cn(
                 "px-4 pt-4 pb-3 flex justify-center w-full z-50 sticky top-0 transition-all",
                 {
+                    "bg-background": variant === "default" && isSticky,
                     "bg-gradient-to-t from-transparent to-[#06080a]":
-                        isSticky,
+                        variant === "landing" && isSticky,
                 }
             )}
         >

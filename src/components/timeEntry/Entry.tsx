@@ -18,7 +18,7 @@ const Entry = ({ entry, index, period, day }: Props) => {
     const activeEntry = !entry.endTime && index === 0
     return (
         <EntryRow entry={entry} day={day} className={cn("group relative z-0 even:bg-card-darker hover:bg-card-foreground", {
-            "sticky top-[58px] z-10": activeEntry
+            "sticky top-[127px] z-10 backdrop-blur-3xl": activeEntry
         })}>
             <td className={cn("absolute -left-8 bg-primary w-4 h-4 top-[50%] translate-y-[-50%] rounded-full",
                 {
@@ -30,7 +30,7 @@ const Entry = ({ entry, index, period, day }: Props) => {
                 <DescriptionForm entry={entry} index={index} />
             </td>
             <td className="whitespace-nowrap p-2 pr-4 w-full">
-                <EntryActions entry={entry} isFirst={index === 0} />
+                <EntryActions entry={entry} />
             </td>
         </EntryRow>
     );

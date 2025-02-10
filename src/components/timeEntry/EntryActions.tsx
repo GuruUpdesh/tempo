@@ -10,19 +10,19 @@ import {
 import { PauseIcon, VerticalDotsIcon } from "../Icons";
 import { Button } from "../ui/button";
 import { deleteEntry, restoreEntry } from "@/actions/entry";
-import { Trash2Icon, Loader } from "lucide-react";
+import { Trash2Icon, Loader, SearchIcon } from "lucide-react";
 import { TimeEntry } from "@/db/schema";
 import { handlePause } from "@/actions/timer";
 import { toast } from "sonner";
 import { DefaultTooltip } from "../ui/tooltip";
 import { addDays, formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 
 type Props = {
     entry: TimeEntry;
-    isFirst: boolean;
 };
 
-const EntryActions = ({ entry, isFirst }: Props) => {
+const EntryActions = ({ entry }: Props) => {
     const [isPausing, startPauseTransition] = useTransition();
     const [isDeleting, startDeleteTransition] = useTransition();
     const [isRestoring, startRestoreTransition] = useTransition();
@@ -93,8 +93,6 @@ const EntryActions = ({ entry, isFirst }: Props) => {
         );
     }
 
-    if (!isFirst) return null;
-
     return (
         <div className="flex items-center gap-2">
             {!entry.endTime && (
@@ -117,12 +115,20 @@ const EntryActions = ({ entry, isFirst }: Props) => {
                     <Button
                         size="icon"
                         variant="ghost"
-                        className="rounded-full"
+                        className="rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                         <VerticalDotsIcon />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center">
+                    {entry.description && (
+                        <DropdownMenuItem asChild>
+                            <Link href={`/search/${encodeURIComponent(entry.description.trim())}`}>
+                                <SearchIcon className="w-4 h-4" />
+                                Find Similar
+                            </Link>
+                        </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem
                         onSelect={() => clickDelete()}
                         disabled={isDeleting}
@@ -132,7 +138,7 @@ const EntryActions = ({ entry, isFirst }: Props) => {
                         ) : (
                             <Trash2Icon className="w-4 h-4" />
                         )}
-                        Delete Entry
+                        Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

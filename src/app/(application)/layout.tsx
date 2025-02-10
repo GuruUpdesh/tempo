@@ -1,9 +1,8 @@
-import { Logo } from "@/components/Icons";
 import User from "@/components/nav/User";
 import Dialogs from "@/components/dialogs/Dialogs";
 import { Toaster } from "@/components/ui/sonner";
-import Link from "next/link";
 import VectorSearchInput from "@/components/VectorSearchInput";
+import NavigationBar from "@/components/landing/NavigationBar";
 
 export default function RootLayout({
     children,
@@ -12,15 +11,12 @@ export default function RootLayout({
 }>) {
     return (
         <>
-            <nav className="p-4 flex justify-center w-full z-50">
-                <div className="max-w-[1100px] w-full flex justify-between items-center">
-                    <Link href="/">
-                        <Logo />
-                    </Link>
+            <NavigationBar>
+                <div className="flex items-center gap-4">
                     <VectorSearchInput />
                     <User />
                 </div>
-            </nav>
+            </NavigationBar>
             <Dialogs />
             <Toaster />
             {children}

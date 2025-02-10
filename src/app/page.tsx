@@ -47,7 +47,7 @@ const OutfitSans = Outfit({
 export default function LandingPage() {
     return (
         <div className={cn("min-h-screen relative", OutfitSans.className)}>
-            <NavigationBar>
+            <NavigationBar variant="landing">
                 <User landingPage />
             </NavigationBar>
             <main className="max-w-[1100px] mx-auto px-4">

@@ -58,12 +58,12 @@ const User = async ({ landingPage = false }: Props) => {
             <DropdownMenu>
                 <DefaultTooltip title={session.user.name}>
                     <DropdownMenuTrigger asChild>
-                        <div className="p-1 rounded-full hover:bg-accent data-[state=open]:bg-accent">
+                        <div className="rounded-full hover:bg-accent data-[state=open]:bg-accent">
                             {session.user.image && (
                                 <Image
                                     src={session.user.image}
-                                    width={30}
-                                    height={30}
+                                    width={40}
+                                    height={40}
                                     alt="Profile Image"
                                     className="rounded-full"
                                 />
