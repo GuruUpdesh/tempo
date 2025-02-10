@@ -43,10 +43,10 @@ const EntriesTable = async ({ entries, period }: Props) => {
                 {entries.length === 0 && (
                     <tr className="shadow">
                         <td
-                            className="bg-card text-center border-t border-border p-4 text-sm text-muted-foreground rounded-l rounded-r"
+                            className="bg-card text-center border-b border-border p-4 text-sm text-muted-foreground rounded-l rounded-r"
                             colSpan={period === "day" ? 5 : 6}
                         >
-                            No time entries for this period
+                            No entries to show
                         </td>
                     </tr>
                 )}
