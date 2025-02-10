@@ -17,7 +17,7 @@ type Props = {
 const Entry = ({ entry, index, period, day }: Props) => {
     const activeEntry = !entry.endTime && index === 0
     return (
-        <EntryRow entry={entry} day={day} className={cn("group relative z-0 even:bg-card-darker hover:bg-card-foreground", {
+        <EntryRow entry={entry} day={day} className={cn("entry-row group relative z-0 even:bg-card-darker hover:bg-card-foreground", {
             "sticky top-[127px] z-10 backdrop-blur-3xl": activeEntry
         })}>
             <td className={cn("absolute -left-8 bg-primary w-4 h-4 top-[50%] translate-y-[-50%] rounded-full",

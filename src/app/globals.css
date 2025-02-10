@@ -75,3 +75,8 @@
         stroke-dashoffset: 0;
     }
 }
+
+.entry-row {
+    content-visibility: auto;
+    contain-intrinsic-size: 56px;
+}
