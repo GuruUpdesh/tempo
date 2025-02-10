@@ -2,24 +2,31 @@ import React from "react";
 
 import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
-import { getEntries } from "@/actions/entry";
+import { semanticSearch } from "@/actions/entry";
 import { TimezoneHandler } from "@/components/TimezoneHandler";
-import { toast } from "sonner";
 import EntriesTable from "@/components/timeEntry/EntriesTable";
 import { BackButton } from "@/components/BackButton";
+import { toast } from "sonner";
+import getTotalTime from "@/utils/getTotalTime";
 
+type Props = {
+    params: Promise<{
+        query: string;
+    }>;
+};
 
-export default async function History() {
+export default async function SearchResults({ params }: Props) {
     const session = await auth();
-    const period = "year";
-
-    const results = await getEntries(period, 0, true);
+    const { query } = await params;
+    const decodedQuery = decodeURIComponent(query);
+    const results = await semanticSearch(decodedQuery);
     if (results.error !== null) {
         toast.error(results.error);
         return null;
     }
 
     const entries = session?.user?.id ? results.data : [];
+    const totalTime = getTotalTime(entries);
 
     return (
         <div className="font-[family-name:var(--font-sans)]">
@@ -30,13 +37,11 @@ export default async function History() {
                     <header className="flex justify-between items-center w-full sticky top-0 bg-background py-2 z-10">
                         <BackButton />
                         <h1 className="text-lg font-bold flex items-center gap-2">
-                            Archived Entries
+                            Results
                         </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Archives last 30 days
-                        </p>
+                        <p>{totalTime}</p>
                     </header>
-                    <EntriesTable entries={entries} period={period} />
+                    <EntriesTable entries={entries} period="year" />
                 </section>
             </main>
         </div>

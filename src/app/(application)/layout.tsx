@@ -3,6 +3,7 @@ import User from "@/components/nav/User";
 import Dialogs from "@/components/dialogs/Dialogs";
 import { Toaster } from "@/components/ui/sonner";
 import Link from "next/link";
+import VectorSearchInput from "@/components/VectorSearchInput";
 
 export default function RootLayout({
     children,
@@ -16,6 +17,7 @@ export default function RootLayout({
                     <Link href="/">
                         <Logo />
                     </Link>
+                    <VectorSearchInput />
                     <User />
                 </div>
             </nav>

@@ -15,7 +15,7 @@ interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
 export const EntryRow = React.forwardRef<HTMLTableRowElement, RowProps>(
     ({ children, entry, day, ...props }, ref) => {
         const setDay = useTableStore((state) => state.setDay);
-        const { searchResults } = useSearchStore();
+        const { searchQuery, searchResults } = useSearchStore();
 
         function setCurrentDay() {
             setDay(day);
@@ -23,7 +23,8 @@ export const EntryRow = React.forwardRef<HTMLTableRowElement, RowProps>(
 
         const result = searchResults.get(entry.id);
         
-        if (!result && !entry.deletedAt) {
+        if (searchQuery && !result && !entry.deletedAt) {
+            console.log("Entry not found in search results or deleted", entry);
             return null;
         }
 

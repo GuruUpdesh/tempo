@@ -1,5 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
-import { integer, text, boolean, pgTable, timestamp, primaryKey, serial, index } from "drizzle-orm/pg-core";
+import { integer, text, boolean, pgTable, timestamp, primaryKey, serial, index, vector } from "drizzle-orm/pg-core";
 
 export const timeEntries = pgTable("time_entries", {
     id: serial('id').primaryKey(),
@@ -9,14 +9,16 @@ export const timeEntries = pgTable("time_entries", {
     description: text("description"),
     startTime: timestamp('start_time').notNull(),
     endTime: timestamp('end_time'),
-    deletedAt: timestamp('deleted_at')
+    deletedAt: timestamp('deleted_at'),
+    embedding: vector('embedding', { dimensions: 1536 }),
 }, (table) => [
     index("active_entry_idx").on(table.endTime, table.startTime),
     index("time_range_idx").on(table.userId, table.startTime, table.deletedAt),
-    index("user_operations_idx").on(table.userId, table.id)
+    index("user_operations_idx").on(table.userId, table.id),
+    index('embeddingIndex').using('hnsw', table.embedding.op('vector_cosine_ops')),
 ]);
 
-export type TimeEntry = InferSelectModel<typeof timeEntries>;
+export type TimeEntry = Omit<InferSelectModel<typeof timeEntries>, 'embedding'>;
 
 // Next Auth Schemas ----------------------------------------------------------
 export const users = pgTable("user", {

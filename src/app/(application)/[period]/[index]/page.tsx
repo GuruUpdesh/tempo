@@ -1,10 +1,8 @@
 import React from "react";
 
 import EntriesTable from "@/components/timeEntry/EntriesTable";
-import { TimeEntry } from "@/db/schema";
 import TimerActions from "@/components/timer/TimerActions";
 import Timer from "@/components/timer/Timer";
-import { differenceInMinutes } from "date-fns";
 import { SummaryButton } from "@/components/SummaryButton";
 import SignIn from "@/components/dialogs/SignIn";
 import { auth } from "@/auth";
@@ -15,6 +13,7 @@ import { toast } from "sonner";
 import { Period } from "@/lib/types";
 import PeriodToggle from "@/components/PeriodToggle";
 import { SearchInput } from "@/components/SearchInput";
+import getTotalTime from "@/utils/getTotalTime";
 
 type Props = {
     params: Promise<{ 
@@ -39,31 +38,10 @@ export default async function Home({ params }: Props) {
     const entries = session?.user?.id ? results.data : [];
     const activeEntry = entries.find((entry) => !entry.endTime);
 
-    const formatDuration = (minutes: number) => {
-        const hours = Math.floor(minutes / 60);
-        const remainingMinutes = minutes % 60;
-        return hours > 0
-            ? `${hours}h ${remainingMinutes}m`
-            : `${remainingMinutes}m`;
-    };
-
-    const calculateTotalTime = (
-        entries: TimeEntry[],
-        filterFn?: (entry: TimeEntry) => boolean
-    ) => {
-        return entries
-            .filter((entry) => entry.endTime && (!filterFn || filterFn(entry)))
-            .reduce((total, entry) => {
-                return (
-                    total + differenceInMinutes(entry.endTime!, entry.startTime)
-                );
-            }, 0);
-    };
-
     const cookieStore = await cookies()
     const timer = cookieStore.get("timer")?.value
 
-    const allTimeTotal = calculateTotalTime(entries);
+    const totalTime = getTotalTime(entries);
 
     return (
         <div className="font-[family-name:var(--font-sans)]">
@@ -91,7 +69,7 @@ export default async function Home({ params }: Props) {
                         <div className="flex items-center gap-4">
                             <SearchInput entries={entries}/>
                             <p>
-                                {formatDuration(allTimeTotal)}
+                                {totalTime}
                             </p>
                         </div>
                     </header>
